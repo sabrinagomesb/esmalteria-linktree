@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sâmya Gomes | Esmalteria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #fcf9f7;
+            --card-bg: #ffffff;
+            --text-main: #3d3330;
+            --text-muted: #8c7b75;
+            --primary: #d4a373;
+            --primary-hover: #bc8a5f;
+            --accent: #faedcd;
+            --border: #f0e6df;
+            --shadow: 0 10px 30px rgba(188, 138, 95, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 36px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin: 0 auto 16px;
+            box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2);
+        }
+
+        h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-color);
+            color: var(--text-main);
+            padding: 16px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .link-btn:hover {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(212, 163, 115, 0.25);
+        }
+
+        .link-btn:hover i {
+            color: #ffffff;
+        }
+
+        .link-btn i.fa-whatsapp {
+            color: #25d366;
+            font-size: 1.25rem;
+        }
+
+        .link-btn i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        /* Modal do Catálogo */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(61, 51, 48, 0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 480px;
+            max-height: 85vh;
+            border-radius: 28px 28px 0 0;
+            padding: 24px;
+            overflow-y: auto;
+            text-align: left;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h2 {
+            font-size: 1.15rem;
+            color: var(--text-main);
+        }
+
+        .close-btn {
+            background: var(--bg-color);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .service-price {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-hover);
+            background: var(--accent);
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Foto de Perfil (usando a foto atual do Instagram ou placeholder) -->
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=150&h=150&fit=crop&crop=faces" alt="Sâmya Gomes" class="profile-img">
+        
+        <h1>Sâmya Gomes | Esmalteria</h1>
+        <div class="location">
+            <i class="fa-solid fa-location-dot">></i> Fortaleza - CE
+        </div>
+
+        <div class="links-list">
+            <!-- Botão WhatsApp -->
+            <a href="https://wa.me/5585991959367" target="_blank" class="link-btn">
+                <span style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fa-brands fa-whatsapp"></i> Agende pelo WhatsApp
+                </span>
+                <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
+            </a>
+
+            <!-- Botão Catálogo de Serviços -->
+            <div onclick="openModal()" class="link-btn">
+                <span style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fa-solid fa-spa"></i> Catálogo de Serviços e Preços
+                </span>
+                <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
+            </div>
+        </div>
+
+        <div class="footer">
+            Sâmya Gomes Esmalteria © 2026
+        </div>
+    </div>
+
+    <!-- Modal do Catálogo -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Catálogo de Serviços</h2>
+                <button onclick="closeModal()" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="service-item">
+                <span class="service-name">Pé e mão simples</span>
+                <span class="service-price">R$ 50</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Mão simples</span>
+                <span class="service-price">R$ 30</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Pé simples</span>
+                <span class="service-price">R$ 30</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Pé com esmaltação em gel</span>
+                <span class="service-price">R$ 40</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Alongamento em gel</span>
+                <span class="service-price">R$ 80</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Manutenção</span>
+                <span class="service-price">R$ 60</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Postiça realista</span>
+                <span class="service-price">R$ 45</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Blindagem com esmaltação em gel</span>
+                <span class="service-price">R$ 40</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Banho de gel</span>
+                <span class="service-price">R$ 45</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Spa dos pés</span>
+                <span class="service-price">R$ 80</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('serviceModal');
+
+        function openModal() {
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
