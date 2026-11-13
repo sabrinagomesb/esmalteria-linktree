@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #fcf9f7;
-            --card-bg: #ffffff;
-            --text-main: #3d3330;
-            --text-muted: #8c7b75;
-            --primary: #d4a373;
-            --primary-hover: #bc8a5f;
-            --accent: #faedcd;
-            --border: #f0e6df;
-            --shadow: 0 10px 30px rgba(188, 138, 95, 0.08);
+            --bg-dark: #120e0c;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #261b16 0%, #120e0c 70%);
+            --card-bg: #1c1817;
+            --card-border: #2c2523;
+            --card-wpp-bg: linear-gradient(135deg, #2d1f1b 0%, #1f1715 100%);
+            --card-wpp-border: #4a332c;
+            --rose-gold: #d99b82;
+            --rose-light: #f3c6b6;
+            --text-main: #ffffff;
+            --text-muted: #9e9693;
         }
 
         * {
@@ -24,117 +25,303 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-dark);
+            background-image: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 48px 20px 24px;
         }
 
         .container {
             width: 100%;
             max-width: 480px;
-            background: var(--card-bg);
-            border-radius: 28px;
-            padding: 36px 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
         }
 
-        .profile-img {
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            margin: 0 auto 16px;
-            box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2);
-        }
-
-        h1 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        .location {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 24px;
+        /* Avatar com brilho e selo */
+        .avatar-wrapper {
+            position: relative;
+            width: 112px;
+            height: 112px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
         }
 
+        .avatar-glow {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 155, 130, 0.45) 0%, rgba(217, 155, 130, 0) 70%);
+            z-index: 0;
+            filter: blur(8px);
+        }
+
+        .avatar-circle {
+            width: 108px;
+            height: 108px;
+            border-radius: 50%;
+            background: #231f1e;
+            border: 2px solid #3d322e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--rose-gold);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-badge {
+            position: absolute;
+            bottom: 0;
+            right: 4px;
+            width: 30px;
+            height: 40px;
+            border-radius: 16px;
+            background: var(--rose-gold);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border: 2px solid #181311;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Cabeçalho */
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        .tag-esmalteria {
+            background: #2b1d19;
+            border: 1px solid #4d332c;
+            color: var(--rose-light);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        .bio {
+            font-size: 0.92rem;
+            color: #b5aeab;
+            text-align: center;
+            max-width: 360px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .location-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #1c1817;
+            border: 1px solid #2e2725;
+            color: #c9c2bf;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 999px;
+            margin-bottom: 32px;
+        }
+
+        .location-pill i {
+            color: var(--rose-gold);
+            font-size: 0.8rem;
+        }
+
+        /* Lista de Botões */
         .links-list {
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
-        .link-btn {
+        .link-card {
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--bg-color);
-            color: var(--text-main);
-            padding: 16px 20px;
-            border-radius: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 16px 18px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            color: var(--text-main);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: all 0.25s ease;
         }
 
-        .link-btn:hover {
-            background: var(--primary);
-            color: #ffffff;
-            border-color: var(--primary);
+        .link-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(212, 163, 115, 0.25);
+            border-color: #4d3d37;
+            background: #221d1b;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
         }
 
-        .link-btn:hover i {
-            color: #ffffff;
+        .link-card.highlight-wpp {
+            background: var(--card-wpp-bg);
+            border-color: var(--card-wpp-border);
         }
 
-        .link-btn i.fa-whatsapp {
-            color: #25d366;
+        .link-card.highlight-wpp:hover {
+            border-color: #634339;
+        }
+
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.25rem;
+            flex-shrink: 0;
         }
 
-        .link-btn i {
-            color: var(--primary);
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
+        .icon-wpp {
+            background: #1c3528;
+            color: #34d399;
+        }
+
+        .icon-catalog {
+            background: #332622;
+            color: #e2b29f;
+        }
+
+        .icon-ig {
+            background: #361b29;
+            color: #f472b6;
+        }
+
+        .icon-map {
+            background: #1b2838;
+            color: #60a5fa;
+        }
+
+        .card-text h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+
+        .card-text p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .arrow-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9e9693;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+
+        .link-card:hover .arrow-circle {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            transform: translateX(2px);
+        }
+
+        /* Card Horário de Atendimento */
+        .hours-card {
+            width: 100%;
+            background: rgba(28, 24, 23, 0.75);
+            border: 1px solid #2c2421;
+            border-radius: 18px;
+            padding: 22px 20px;
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .hours-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--rose-light);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .hours-desc {
+            font-size: 0.82rem;
+            color: #b5aeab;
+        }
+
+        /* Rodapé */
+        footer {
+            width: 100%;
+            border-top: 1px solid #1f1a18;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.76rem;
+            color: #6e6764;
         }
 
         /* Modal do Catálogo */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(61, 51, 48, 0.6);
-            backdrop-filter: blur(4px);
+            inset: 0;
+            background: rgba(10, 8, 7, 0.78);
+            backdrop-filter: blur(6px);
             justify-content: center;
-            align-items: flex-end;
+            align-items: center;
+            padding: 20px;
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.2s ease;
         }
 
         .modal.active {
@@ -142,77 +329,109 @@
         }
 
         .modal-content {
-            background: var(--card-bg);
+            background: #1c1817;
+            border: 1px solid #362c28;
             width: 100%;
-            max-width: 480px;
+            max-width: 460px;
             max-height: 85vh;
-            border-radius: 28px 28px 0 0;
+            border-radius: 24px;
             padding: 24px;
             overflow-y: auto;
-            text-align: left;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            animation: slideUp 0.25s ease;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #2c2523;
         }
 
-        .modal-header h2 {
+        .modal-header h3 {
             font-size: 1.15rem;
-            color: var(--text-main);
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header h3 i {
+            color: var(--rose-gold);
         }
 
         .close-btn {
-            background: var(--bg-color);
-            border: none;
-            width: 32px;
-            height: 32px;
+            background: #282220;
+            border: 1px solid #3a312e;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
+            color: #b5aeab;
             cursor: pointer;
-            font-size: 1rem;
-            color: var(--text-muted);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
         }
 
-        .service-item {
+        .close-btn:hover {
+            background: #362d2a;
+            color: #ffffff;
+        }
+
+        .service-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px dashed var(--border);
+            padding: 13px 4px;
+            border-bottom: 1px dashed #2c2523;
+            gap: 12px;
         }
 
-        .service-item:last-child {
+        .service-row:last-child {
             border-bottom: none;
         }
 
         .service-name {
             font-size: 0.9rem;
+            color: #e5e0dd;
             font-weight: 500;
-            color: var(--text-main);
         }
 
         .service-price {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 700;
-            color: var(--primary-hover);
-            background: var(--accent);
-            padding: 4px 10px;
-            border-radius: 8px;
+            color: var(--rose-light);
+            background: #2b1f1c;
+            border: 1px solid #45302a;
+            padding: 5px 11px;
+            border-radius: 10px;
+            white-space: nowrap;
         }
 
-        .footer {
+        .modal-cta {
             margin-top: 20px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: #25d366;
+            color: #0b1a10;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-cta:hover {
+            opacity: 0.92;
         }
 
         @keyframes fadeIn {
@@ -221,93 +440,172 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+            from { transform: translateY(16px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Foto de Perfil (usando a foto atual do Instagram ou placeholder) -->
-        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=150&h=150&fit=crop&crop=faces" alt="Sâmya Gomes" class="profile-img">
-        
-        <h1>Sâmya Gomes | Esmalteria</h1>
-        <div class="location">
-            <i class="fa-solid fa-location-dot">></i> Fortaleza - CE
-        </div>
-
-        <div class="links-list">
-            <!-- Botão WhatsApp -->
-            <a href="https://wa.me/5585991959367" target="_blank" class="link-btn">
-                <span style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-brands fa-whatsapp"></i> Agende pelo WhatsApp
-                </span>
-                <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
-            </a>
-
-            <!-- Botão Catálogo de Serviços -->
-            <div onclick="openModal()" class="link-btn">
-                <span style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-solid fa-spa"></i> Catálogo de Serviços e Preços
-                </span>
-                <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
+        <!-- Foto de Perfil (samya.jpeg) ou Iniciais SG se não carregar -->
+        <div class="avatar-wrapper">
+            <div class="avatar-glow"></div>
+            <div class="avatar-circle">
+                <img src="samya.jpeg" alt="Sâmya Gomes" onerror="this.style.display='none'; document.getElementById('avatar-fallback').style.display='block';">
+                <span id="avatar-fallback" style="display: none;">SG</span>
+            </div>
+            <div class="avatar-badge">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
         </div>
 
-        <div class="footer">
-            Sâmya Gomes Esmalteria © 2026
+        <!-- Título e Selo -->
+        <div class="title-row">
+            <h1>Sâmya Gomes</h1>
+            <span class="tag-esmalteria">Esmalteria</span>
+        </div>
+
+        <!-- Bio -->
+        <p class="bio">✨ Unhas impecáveis para você se sentir ainda mais confiante</p>
+
+        <!-- Localização -->
+        <div class="location-pill">
+            <i class="fa-solid fa-location-dot"></i> Fortaleza - CE
+        </div>
+
+        <!-- Botões Principais (Catálogo primeiro, WhatsApp depois) -->
+        <div class="links-list">
+            <!-- 1. Catálogo de Serviços & Preços -->
+            <div onclick="openModal()" class="link-card">
+                <div class="card-left">
+                    <div class="icon-box icon-catalog">
+                        <i class="fa-solid fa-hand-sparkles"></i>
+                    </div>
+                    <div class="card-text">
+                        <h2>Catálogo de Serviços & Preços</h2>
+                        <p>Confira nossos procedimentos e valores</p>
+                    </div>
+                </div>
+                <div class="arrow-circle">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- 2. Agendar Horário (WhatsApp) -->
+            <a href="https://wa.me/5585991959367" target="_blank" rel="noopener noreferrer" class="link-card highlight-wpp">
+                <div class="card-left">
+                    <div class="icon-box icon-wpp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div class="card-text">
+                        <h2>Agendar Horário</h2>
+                        <p>Atendimento personalizado via WhatsApp</p>
+                    </div>
+                </div>
+                <div class="arrow-circle">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- 3. Instagram Oficial -->
+            <a href="https://www.instagram.com/samyagomesesmalteria" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="card-left">
+                    <div class="icon-box icon-ig">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="card-text">
+                        <h2>Instagram Oficial</h2>
+                        <p>Veja fotos dos resultados e novidades</p>
+                    </div>
+                </div>
+                <div class="arrow-circle">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- 4. Nossa Localização -->
+            <a href="https://www.google.com/maps/search/?api=1&query=Fortaleza+CE" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="card-left">
+                    <div class="icon-box icon-map">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <div class="card-text">
+                        <h2>Nossa Localização</h2>
+                        <p>Fortaleza - CE</p>
+                    </div>
+                </div>
+                <div class="arrow-circle">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- Horário de Atendimento -->
+        <div class="hours-card">
+            <div class="hours-title">Horário de Atendimento</div>
+            <div class="hours-desc">Segunda a Sábado mediante agendamento prévio via WhatsApp.</div>
         </div>
     </div>
 
-    <!-- Modal do Catálogo -->
+    <footer>
+        © 2026 Sâmya Gomes Esmalteria. Todos os direitos reservados.
+    </footer>
+
+    <!-- Modal do Catálogo de Serviços -->
     <div id="serviceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Catálogo de Serviços</h2>
-                <button onclick="closeModal()" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                <h3><i class="fa-solid fa-hand-sparkles"></i> Catálogo de Serviços</h3>
+                <button onclick="closeModal()" class="close-btn" aria-label="Fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            
-            <div class="service-item">
+
+            <div class="service-row">
                 <span class="service-name">Pé e mão simples</span>
                 <span class="service-price">R$ 50</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Mão simples</span>
                 <span class="service-price">R$ 30</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Pé simples</span>
                 <span class="service-price">R$ 30</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Pé com esmaltação em gel</span>
                 <span class="service-price">R$ 40</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Alongamento em gel</span>
                 <span class="service-price">R$ 80</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Manutenção</span>
                 <span class="service-price">R$ 60</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Postiça realista</span>
                 <span class="service-price">R$ 45</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Blindagem com esmaltação em gel</span>
                 <span class="service-price">R$ 40</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Banho de gel</span>
                 <span class="service-price">R$ 45</span>
             </div>
-            <div class="service-item">
+            <div class="service-row">
                 <span class="service-name">Spa dos pés</span>
                 <span class="service-price">R$ 80</span>
             </div>
+
+            <a href="https://wa.me/5585991959367" target="_blank" rel="noopener noreferrer" class="modal-cta">
+                <i class="fa-brands fa-whatsapp"></i> Quero agendar um horário
+            </a>
         </div>
     </div>
 
@@ -322,11 +620,11 @@
             modal.classList.remove('active');
         }
 
-        window.onclick = function(event) {
-            if (event.target == modal) {
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
                 closeModal();
             }
-        }
+        });
     </script>
 </body>
 </html>
